@@ -80,3 +80,20 @@ resource "aws_lambda_function" "list_lambda" {
   filename         = "../backend/list/lambda_list.zip"
   source_code_hash = filebase64sha256("../backend/list/lambda_list.zip")
 }
+
+# Permissões para a API Gateway invocar as Lambdas
+resource "aws_lambda_permission" "upload_permission" {
+  statement_id  = "AllowExecutionFromAPIGatewayUpload"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.upload_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api.execution_arn}/*/*/upload"  # Atualizado para API HTTP
+}
+
+resource "aws_lambda_permission" "list_permission" {
+  statement_id  = "AllowExecutionFromAPIGatewayList"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.list_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api.execution_arn}/*/*/list-files"  # Atualizado para API HTTP
+}
