@@ -2,8 +2,6 @@ backend/list/node_modules
 backend/list/.env
 backend/upload/node_modules
 backend/upload/.env
-frontend/node_modules
-frontend/build
 infra/.terraform*
 infra/terraform.tfstate
 infra/terraform.tfstate.backup
